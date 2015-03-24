@@ -1,0 +1,21 @@
+﻿<div class="container">
+    <h1>Patient List</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr class="success">
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Family Doctor ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="patient in patientList">
+                <td>{{patient.ID}}</td>
+                <td>{{patient.first_name}}</td>
+                <td>{{patient.last_name}}</td>
+                <td>{{patient.family_doctor_ID}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
