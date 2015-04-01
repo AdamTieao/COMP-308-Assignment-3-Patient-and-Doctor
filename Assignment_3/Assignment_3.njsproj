@@ -38,6 +38,7 @@
     <Content Include="public\patientEdit.html" />
     <Content Include="public\patientList.html" />
     <Content Include="public\patientNew.html" />
+    <Content Include="public\patientVisits.html" />
     <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>

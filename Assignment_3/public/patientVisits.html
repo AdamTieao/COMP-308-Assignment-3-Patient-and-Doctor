@@ -1,0 +1,26 @@
+﻿<div class="container">
+    <h1>Patient Visits <a class="btn btn-primary" type="button" name="newPatient" href="" >New</a></h1>
+    <table class="table table-striped">
+        <thead>
+            <tr class="success">
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Family Doctor ID</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="visit in patientVisits">
+                <td>{{patient.ID}}</td>
+                <td>{{visit.id}}</td>
+                <td>{{visit.complaint}}</td>
+                <td>{{visit.billing_amt}}</td>
+                <td>
+                    <input class="btn btn-danger" type="button" name="removePatient" value="Delete" ng-click="removePatient(patient.ID)" />
+                    <button class="btn btn-warning" onclick="location.href = '#PatientEdit'">Edit</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

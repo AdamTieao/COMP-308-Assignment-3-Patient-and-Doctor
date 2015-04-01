@@ -4,14 +4,23 @@ app.config(['$routeProvider',
   function ($routeProvider) {
         $routeProvider
         .when('/Patients', {
-            templateUrl: 'PatientList.html',
+            templateUrl: 'patientList.html',
             controller: 'PatientListCtrl'
         })
-        .when('/PatientEdit', {
-            templateUrl: 'PatientEdit.html',
+        .when('/PatientEdit/:ID', {
+            templateUrl: 'patientEdit.html',
             controller: 'PatientEditCtrl'
         })
-
+        /*
+        .when('/PatientVisits/:ID', {
+            templateUrl: 'patientVisits.html',
+            controller: 'PatientVisitsCtrl'
+        })
+        */
+        .when('/PatientNew', {
+            templateUrl: 'patientNew.html',
+            controller: 'PatientNewCtrl'
+        })
         // exception
         .otherwise({
             redirectTo: '/'

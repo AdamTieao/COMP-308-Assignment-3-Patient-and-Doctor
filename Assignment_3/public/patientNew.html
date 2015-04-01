@@ -1,21 +1,62 @@
 ﻿<div class="container">
-    <h1>Patient List</h1>
-    <table class="table table-striped">
-        <thead>
-            <tr class="success">
-                <th>ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Family Doctor ID</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="patient in patientList">
-                <td>{{patient.ID}}</td>
-                <td>{{patient.first_name}}</td>
-                <td>{{patient.last_name}}</td>
-                <td>{{patient.family_doctor_ID}}</td>
-            </tr>
-        </tbody>
+    <h2>Add a New Patient</h2>
+</div>
+<div style="position:fixed;left:4cm" class="form-inline" ng-controller="PatientNewCtrl">
+    <table>
+        <tr>
+            <th>Patient ID</th>
+            <td>
+                <input class="form-control" type="text" ng-model="patient.ID">
+            </td>
+        </tr>
+        <tr>
+            <th>First Name</th>
+            <td>
+                <input class="form-control" type="text" ng-model="patient.first_name" ng-pattern="fn" required>
+            </td>
+        </tr>
+        <tr>
+            <th>Last Name</th>
+            <td>
+                <input class="form-control" type="text" ng-model="patient.last_name" ng-pattern="ln" required />
+            </td>
+        </tr>
+        <!--
+        <tr>
+            <th>Visits</th>
+            <td>
+                <a class="btn btn-info" type="button" href="#PatientVisits/{{patient.ID}}">See Visit Details</a>
+            </td>
+        </tr>
+            -->
+        <tr>
+            <th>Age</th>
+            <td>
+                <input class="form-control" type="text" ng-model="patient.age" ng-pattern="pn" required>
+            </td>
+        </tr>
+        <tr>
+            <th>Family Doctor</th>
+            <td>
+                <input class="form-control" type="text" ng-model="patient.family_doctor_ID" ng-pattern="pn" required>
+            </td>
+        </tr>
+        <tr>
+            <th>Created Date</th>
+            <td>
+                <input class="form-control" type="text" ng-model="patient.created_at" ng-pattern="pn" disabled>
+            </td>
+        </tr>
+        <tr>
+            <th>Last Modified Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+            <td>
+                <input class="form-control" type="text" ng-model="patient.last_modified" ng-pattern="pn" disabled>
+            </td>
+        </tr>
     </table>
+    <br />
+    <br />
+    <div>
+        <input class="btn btn-primary" ng-click="saveNew()" type="button" value="Save">
+    </div>
 </div>

@@ -1,0 +1,6 @@
+--CMD#1: Start a server
+D:\software\MongoDB\bin>mongod --dbpath "d:\software\mongodb\data\db"
+
+
+--CMD#2: Connect to DB
+D:\software\MongoDB\bin>mongo

@@ -1,5 +1,5 @@
 ﻿<div class="container">
-    <h1>Patient List <input class="btn btn-primary" type="button" name="newPatient" value="New" ng-click="newPatient()"/></h1>
+    <h1>Patient List <a class="btn btn-primary" type="button" name="newPatient" href="#PatientNew">New</a></h1>
     <table class="table table-striped">
         <thead>
             <tr class="success">
@@ -18,7 +18,7 @@
                 <td>{{patient.family_doctor_ID}}</td>
                 <td>
                     <input class="btn btn-danger" type="button" name="removePatient" value="Delete" ng-click="removePatient(patient.ID)" />
-                    <button class="btn btn-warning" onclick="location.href = '#PatientEdit'">Edit</button>
+                    <a class="btn btn-warning" type="button" name="editPatient" href="#PatientEdit/{{patient.ID}}" >Edit</a>
                 </td>
             </tr>
         </tbody>
