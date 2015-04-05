@@ -1,5 +1,5 @@
 ﻿<div class="container">
-    <h1>Patient List <a class="btn btn-primary" type="button" name="newPatient" href="#PatientNew">New</a></h1>
+    <h2>Patient List <small>Search Result</small>&nbsp;&nbsp;<a class="btn btn-primary" type="button" name="newPatient" href="#PatientNew">New</a></h2>
     <table class="table table-striped">
         <thead>
             <tr class="success">
@@ -14,12 +14,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="patient in patientList | filter:query ">
+            <tr ng-repeat="patient in patientList | filter:query | orderBy:'ID' | pagination: curPage * pageSize | limitTo: pageSize">
                 <td>{{patient.ID}}</td>
                 <td>{{patient.first_name}}</td>
                 <td>{{patient.last_name}}</td>
                 <td>
-                    <select class="form-control" ng-options="doctor.ID as doctor.first_name + ' ' + doctor.last_name for doctor in doctorList" ng-model="patient.family_doctor_ID" disabled></select>
+                    <select style="width:auto" class="form-control" ng-options="doctor.ID as doctor.first_name + ' ' + doctor.last_name for doctor in doctorList" ng-model="patient.family_doctor_ID" disabled></select>
                 </td>
                 <td>{{patient.created_at}}</td>
                 <td>{{patient.last_modified}}</td>
@@ -30,4 +30,21 @@
             </tr>
         </tbody>
     </table>
+    <div ng-show="patientList.length">
+
+        <button class="btn-primary" type="button" ng-disabled="curPage == 0"
+                ng-click="curPage=curPage-1">
+            PREV
+        </button>
+
+        <!--<span ng-repeat="page in pages"></span>-->
+        <span>Page {{curPage + 1}} of {{ numberOfPages() }}</span>
+
+        <button class="btn-primary" type="button"
+                ng-disabled="curPage >= patientList.length/pageSize - 1"
+                ng-click="curPage = curPage+1">
+            NEXT
+        </button>
+
+    </div>
 </div>

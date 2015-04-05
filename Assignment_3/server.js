@@ -86,10 +86,38 @@ app.delete('/patientList/:ID', function (req, res) {
     });
 });
 
-app.get('/patientList/:char', function (req, res) {
+app.get('/patientName/:char', function (req, res) {
     var charPat = req.params.char;
     console.log("I get the search " + charPat);
     patients.find({ last_name: charPat }, function (err, pats) {
+        if (err) {
+            console.error;
+        }
+        else {
+            res.json(pats);
+            console.log(pats);
+        }
+    })
+});
+
+app.get('/patientID/:ID', function (req, res) {
+    var charPat = req.params.ID;
+    console.log("I get the ID " + charPat);
+    patients.find({ ID: charPat }, function (err, pats) {
+        if (err) {
+            console.error;
+        }
+        else {
+            res.json(pats);
+            console.log(pats);
+        }
+    })
+});
+
+app.get('/patientDoc/:ID', function (req, res) {
+    var charPat = req.params.ID;
+    console.log("I get the search " + charPat);
+    patients.find({ family_doctor_ID: charPat }, function (err, pats) {
         if (err) {
             console.error;
         }

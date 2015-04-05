@@ -6,7 +6,7 @@
         <tr>
             <th>Patient ID</th>
             <td>
-                <input class="form-control" type="text" ng-model="patient.ID">
+                <input class="form-control" type="text" ng-model="patient.ID" ng-pattern="id" required>
             </td>
         </tr>
         <tr>
@@ -24,15 +24,13 @@
         <tr>
             <th>Age</th>
             <td>
-                <input class="form-control" type="text" ng-model="patient.age" ng-pattern="pn" required>
+                <input class="form-control" type="text" ng-model="patient.age" ng-pattern="age" required>
             </td>
         </tr>
         <tr>
             <th>Family Doctor</th>
             <td>
-                <select class="form-control" ng-model="patient.family_doctor_ID" required>
-                    <option ng-repeat="doctor in doctorList" value="{{doctor.ID}}" selected>{{doctor.first_name}}&nbsp;{{doctor.last_name}}</option>
-                </select>
+                <select class="form-control" ng-options="doctor.ID as doctor.first_name + ' ' + doctor.last_name for doctor in doctorList" ng-model="patient.family_doctor_ID" required></select>
             </td>
         </tr>
         <!--

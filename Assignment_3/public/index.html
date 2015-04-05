@@ -24,22 +24,28 @@
 
 </head>
 <body>
-    <h1>Patient Management App</h1>
-    <div>
-        <form ng-controller="PatientChangeCtrl">
-            Filter: <input ng-model="query" />
-            Search: <input type="text" ng-model="search" />
-            <input type="button"  ng-click="searchPat(search)" value="Search"/>
-        </form>
-    </div>
-    <ul>
-        <!-- views -->
-        <li><a href="#Patients">All Patient List </a></li>
-    </ul>
-    <div>
-        <div ng-view></div>
-    </div>
-
-    <div class="copyright" style="position:fixed;bottom:5px">Copyright: Assignment#3 300759097 Zexu (Adam) Zhao Centennial College</div>
+    <nav style="position:fixed;width:100%" class="navbar navbar-default">
+        <h1>Patient Management App</h1>
+        <div class=" navbar-header">
+            <form class="navbar-form navbar-left">
+                Filter: <input placeholder="Filter" class="form-control" ng-model="query" />
+                <span ng-controller="PatientChangeCtrl">
+                    Search: <input placeholder="Search by last name" class="form-control" type="text" ng-model="search" required/>
+                    <input type="button" class="btn btn-primary" ng-click="searchPat(search)" value="Search" />
+                    <select class="form-control" ng-model="doctor.ID">
+                        <option ng-repeat="doctor in doctorList" value="{{doctor.ID}}">Dr. {{doctor.first_name}} {{doctor.last_name}}</option>
+                    </select>
+                    <input type="button" class="btn btn-primary" ng-click="searchDoc(doctor.ID)" value="Search By doctor name" />
+                    <a type="button" style="right:1px" class="btn btn-warning" href="#Patients">All Patient List </a>
+                </span>
+            </form>
+        </div>
+    </nav>
+        <div>
+            <br /><br /><br /><br /><br /><br />
+            <div ng-view></div>
+        </div>
+        <br /><br />
+        <div class="copyright" style="position:fixed;bottom:5px">Copyright: Assignment#3 300759097 Zexu (Adam) Zhao Centennial College</div>
 </body>
 </html>
