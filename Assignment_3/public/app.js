@@ -11,6 +11,10 @@ app.config(['$routeProvider',
             templateUrl: 'patientEdit.html',
             controller: 'PatientEditCtrl'
         })
+        .when('/PatientSearch/:char', {
+            templateUrl: 'patientSearch.html',
+            controller: 'PatientSearchCtrl'
+        })
         /*
         .when('/PatientVisits/:ID', {
             templateUrl: 'patientVisits.html',

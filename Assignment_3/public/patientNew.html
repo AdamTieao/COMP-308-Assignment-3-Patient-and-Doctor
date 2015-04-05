@@ -20,15 +20,7 @@
             <td>
                 <input class="form-control" type="text" ng-model="patient.last_name" ng-pattern="ln" required />
             </td>
-        </tr>
-        <!--
-        <tr>
-            <th>Visits</th>
-            <td>
-                <a class="btn btn-info" type="button" href="#PatientVisits/{{patient.ID}}">See Visit Details</a>
-            </td>
-        </tr>
-            -->
+        </tr>                         
         <tr>
             <th>Age</th>
             <td>
@@ -38,9 +30,19 @@
         <tr>
             <th>Family Doctor</th>
             <td>
+                <select class="form-control" ng-model="patient.family_doctor_ID" required>
+                    <option ng-repeat="doctor in doctorList" value="{{doctor.ID}}" selected>{{doctor.first_name}}&nbsp;{{doctor.last_name}}</option>
+                </select>
+            </td>
+        </tr>
+        <!--
+        <tr>
+            <th>Family Doctor ID</th>
+            <td>
                 <input class="form-control" type="text" ng-model="patient.family_doctor_ID" ng-pattern="pn" required>
             </td>
         </tr>
+        -->
         <tr>
             <th>Created Date</th>
             <td>

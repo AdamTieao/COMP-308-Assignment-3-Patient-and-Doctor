@@ -19,19 +19,29 @@ var Patients = {
     last_modified: String
 };
 
+var Doctors = {
+    ID: String,
+    first_name: String,
+    last_name: String,
+    password: String
+};
+
 var shmPatients = new Schema(Patients);
+var shmDoctors = new Schema(Doctors);
 
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.json());
 
 var patients = mongoose.model("patients", shmPatients);
+var doctors = mongoose.model("doctors", shmDoctors);
+
 mongoose.connect('mongodb://localhost/patient');
 var dbg = mongoose.connection;
 dbg.on('error', console.error);
 dbg.once('open', dataOpen);
 
 app.get('/patientList', function (req, res) {
-    console.log("I received a GET request")
+    console.log("I received a GET PAT request");
     
     patients.find(function (err, pats) {
         if (err) {
@@ -44,13 +54,21 @@ app.get('/patientList', function (req, res) {
     });
 });
 
+
+
 app.get('/doctorList', function (req, res) {
-    console.log("I received a GET request")
+    console.log("I received a GET request");
     
-    dbDoc.doctor.find(function (err, pats) {
-        console.log(pats);
-        res.json(pats);
-    });
+    doctors.find(function (err, docs) {
+        if (err) {
+            console.err;
+        }
+        else {
+            res.json(docs);
+            console.log(docs);
+        }
+    });    
+    
 });
 
 app.delete('/patientList/:ID', function (req, res) {
@@ -66,6 +84,20 @@ app.delete('/patientList/:ID', function (req, res) {
             console.log(pats);
         }
     });
+});
+
+app.get('/patientList/:char', function (req, res) {
+    var charPat = req.params.char;
+    console.log("I get the search " + charPat);
+    patients.find({ last_name: charPat }, function (err, pats) {
+        if (err) {
+            console.error;
+        }
+        else {
+            res.json(pats);
+            console.log(pats);
+        }
+    })
 });
 
 app.post('/patientNew', function (req, res) {

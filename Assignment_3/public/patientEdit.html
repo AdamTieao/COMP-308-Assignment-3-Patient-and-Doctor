@@ -36,9 +36,10 @@
             </td>
         </tr>
         <tr>
-            <th>Family Doctor ID</th>
+            <th>Family Doctor</th>
             <td>
-                <input class="form-control" type="text" ng-model="patient.family_doctor_ID" ng-pattern="pn" required>
+                <select class="form-control" ng-options="doctor.ID as doctor.first_name + ' ' + doctor.last_name for doctor in doctorList" ng-model="patient.family_doctor_ID" required>
+                </select>
             </td>
         </tr>
         <tr>

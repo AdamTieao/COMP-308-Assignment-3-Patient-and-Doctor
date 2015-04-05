@@ -25,10 +25,16 @@
 </head>
 <body>
     <h1>Patient Management App</h1>
+    <div>
+        <form ng-controller="PatientChangeCtrl">
+            Filter: <input ng-model="query" />
+            Search: <input type="text" ng-model="search" />
+            <input type="button"  ng-click="searchPat(search)" value="Search"/>
+        </form>
+    </div>
     <ul>
         <!-- views -->
-        <li><a href="#Patients"> Patient List </a></li>
-        <li><a href="#PatientVisits"> Patient Visits </a></li>
+        <li><a href="#Patients">All Patient List </a></li>
     </ul>
     <div>
         <div ng-view></div>
