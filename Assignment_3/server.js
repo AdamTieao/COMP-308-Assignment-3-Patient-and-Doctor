@@ -9,6 +9,7 @@
 
 var port = process.env.port || 1337;
 
+// Patient Schema
 var Patients = {    
     ID: String,
     first_name: String,
@@ -19,6 +20,7 @@ var Patients = {
     last_modified: String
 };
 
+// Doctor Schema
 var Doctors = {
     ID: String,
     first_name: String,
@@ -35,11 +37,12 @@ app.use(bodyParser.json());
 var patients = mongoose.model("patients", shmPatients);
 var doctors = mongoose.model("doctors", shmDoctors);
 
-mongoose.connect('mongodb://localhost/patient');
+mongoose.connect('mongodb://localhost/patient');    // Database
 var dbg = mongoose.connection;
 dbg.on('error', console.error);
-dbg.once('open', dataOpen);
+dbg.once('open', dataOpen); // Open database
 
+// Get Patient List
 app.get('/patientList', function (req, res) {
     console.log("I received a GET PAT request");
     
@@ -54,8 +57,7 @@ app.get('/patientList', function (req, res) {
     });
 });
 
-
-
+// Get Doctor List
 app.get('/doctorList', function (req, res) {
     console.log("I received a GET request");
     
@@ -71,6 +73,7 @@ app.get('/doctorList', function (req, res) {
     
 });
 
+// Delete Patient
 app.delete('/patientList/:ID', function (req, res) {
     var id = req.params.ID;
     console.log("I delete the patient" + id);
@@ -86,6 +89,7 @@ app.delete('/patientList/:ID', function (req, res) {
     });
 });
 
+// Get Patient with Last Name Search
 app.get('/patientName/:char', function (req, res) {
     var charPat = req.params.char;
     console.log("I get the search " + charPat);
@@ -100,6 +104,7 @@ app.get('/patientName/:char', function (req, res) {
     })
 });
 
+// Get Patient with ID
 app.get('/patientID/:ID', function (req, res) {
     var charPat = req.params.ID;
     console.log("I get the ID " + charPat);
@@ -114,6 +119,7 @@ app.get('/patientID/:ID', function (req, res) {
     })
 });
 
+// Get Patient with Doctor ID
 app.get('/patientDoc/:ID', function (req, res) {
     var charPat = req.params.ID;
     console.log("I get the search " + charPat);
@@ -128,6 +134,7 @@ app.get('/patientDoc/:ID', function (req, res) {
     })
 });
 
+// Insert into New Patient
 app.post('/patientNew', function (req, res) {
     
     console.log(req.body);
@@ -144,6 +151,7 @@ app.post('/patientNew', function (req, res) {
     });
 });
 
+// Update the Patient
 app.put('/patientEdit/:ID', function (req, res) {
     var id = req.params.ID;
     console.log(id);
@@ -161,6 +169,7 @@ app.put('/patientEdit/:ID', function (req, res) {
     })
 });
 
+// Get the Patient with ID
 app.get('/patientEdit/:ID', function (req, res) {
     var id = req.params.ID;
     console.log("I got the patient" + id);
@@ -181,6 +190,7 @@ app.get('/patientEdit/:ID', function (req, res) {
 app.listen(port);
 console.log("Server running on port 1337");
 
+// Check if Database is open
 function dataOpen() { 
     console.log("Database Open!");
 }

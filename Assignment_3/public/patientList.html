@@ -30,6 +30,8 @@
             </tr>
         </tbody>
     </table>
+
+    <!-- Pagination -->
     <div ng-show="patientList.length">
 
         <button class="btn-primary" type="button" ng-disabled="curPage == 0"
@@ -37,7 +39,7 @@
             PREV
         </button>
 
-        <!--<span ng-repeat="page in pages"></span>-->
+        <!-- Current Page -->
         <span>Page {{curPage + 1}} of {{ numberOfPages() }}</span>
 
         <button class="btn-primary" type="button"

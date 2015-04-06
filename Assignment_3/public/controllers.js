@@ -1,5 +1,6 @@
 ﻿var patientControllers = angular.module("patientControllers", []);
 
+// pagination
 angular.module('patientControllers').filter('pagination', function () {
     return function (input, start) {
         start = +start;
@@ -7,31 +8,39 @@ angular.module('patientControllers').filter('pagination', function () {
     };
 });
 
+// global variables
 var changePat;
 var changeDoc;
 
+// Patient List Controller
 patientControllers.controller('PatientListCtrl', ['$scope', '$routeParams', '$http', function ($scope, $routeParams, $http) {
         console.log("Hello World from Patient List");
+        
+        // Get the date of today using format dd/mm/yyyy
         var d = new Date();
         console.log(d.getDate() + "/" + Number(d.getMonth() + 1) + "/" + d.getFullYear());
         
+        // Function to show the list
         var refresh = function () {
             $http.get('/patientList').success(function (response) {
                 console.log("I got the patient list");
-                $scope.patientList = response;
+                $scope.patientList = response;  // Get the patient list
             });
             $http.get('/doctorList').success(function (response) {
                 console.log("I got the doctor list");
-                $scope.doctorList = response;
+                $scope.doctorList = response;   // Get the doctor list
             });
         }
+        
+        // Call the function
         refresh();
         console.log("requested");
         
+        // Remove the patient
         $scope.removePatient = function (ID) {
             if (confirm('Delete the patient with ID of ' + ID + '?')) {
                 $http.delete('/patientList/' + ID).success(function (response) {
-                    refresh();
+                    refresh();  // Get the patient list again
                 });
             }
         };
@@ -47,33 +56,36 @@ patientControllers.controller('PatientListCtrl', ['$scope', '$routeParams', '$ht
                 //error
             });
         };        
-
+        
+        // Calculate the number of pages
         $scope.numberOfPages = function () {
             return Math.ceil($scope.patientList.length / $scope.pageSize);
         };
                 
     }]);
 
+// Patient Search Controller
 patientControllers.controller('PatientSearchCtrl', ['$scope', '$routeParams', '$http', function ($scope, $routeParams, $http) {
-        console.log("Hello World from Patient List");
+        console.log("Hello World from Patient List");        
         
-        //window.location.href = "#/PatientSearch/search";
-
+        // Function to show the list
         var refresh = function () {
-            if (changePat != null) {
+            if (changePat != null) {    // Inputbox should be filled
                 var char = changePat;
                 $http.get('/patientName/' + char).success(function (response) {
                     $scope.patientList = response;
                     console.log($scope.patientList);
                 });
             }
-            if (changeDoc != null) {
+            if (changeDoc != null) {    // Combobox should not be empty
                 var ID = changeDoc;
                 $http.get('/patientDoc/' + ID).success(function (response) {
                     $scope.patientList = response;
                     console.log($scope.patientList);
                 });
             }
+            
+            // Get the doctor list
             $http.get('/doctorList').success(function (response) {
                 console.log("I got the doctor list");
                 $scope.doctorList = response;
@@ -84,6 +96,7 @@ patientControllers.controller('PatientSearchCtrl', ['$scope', '$routeParams', '$
         refresh();
         console.log("requested");                
         
+        // Remove the patient
         $scope.removePatient = function (ID) {
             if (confirm('Delete the patient with ID of ' + ID + '?')) {
                 $http.delete('/patientList/' + ID).success(function (response) {
@@ -110,11 +123,11 @@ patientControllers.controller('PatientSearchCtrl', ['$scope', '$routeParams', '$
                 
     }]);
 
+// Patient Search by Changing Key word
 patientControllers.controller('PatientChangeCtrl', ['$scope', '$routeParams', '$http', function ($scope, $routeParams, $http) {
         console.log("Hello World from Patient List");
         
-        //window.location.href = "#/PatientSearch/search";        
-        
+        // Seach by Patient Last Name
         $scope.searchPat = function (search){
             if (search != null) {
                 changePat = search;
@@ -124,6 +137,7 @@ patientControllers.controller('PatientChangeCtrl', ['$scope', '$routeParams', '$
         }
         console.log("requested");
         
+        // Search by Doctor Name
         $scope.searchDoc = function (ID) {
             if (ID != null) {
                 changeDoc = ID;
@@ -132,6 +146,7 @@ patientControllers.controller('PatientChangeCtrl', ['$scope', '$routeParams', '$
             }
         }
         
+        // Remove Patient
         $scope.removePatient = function (ID) {
             if (confirm('Delete the patient with ID of ' + ID + '?')) {
                 $http.delete('/patientList/' + ID).success(function (response) {
@@ -139,6 +154,8 @@ patientControllers.controller('PatientChangeCtrl', ['$scope', '$routeParams', '$
                 });
             }
         };
+        
+        // Get the doctor list
         $http.get('/doctorList').success(function (response) {
             console.log("I got the doctor list");
             $scope.doctorList = response;
@@ -146,6 +163,7 @@ patientControllers.controller('PatientChangeCtrl', ['$scope', '$routeParams', '$
                 
     }]);
 
+// Patient Edit List
 patientControllers.controller('PatientEditCtrl', ['$scope', '$routeParams', '$http', '$location',
     function ($scope, $routeParams, $http, $location) {
         console.log("Hello World from Patient Detail");
@@ -158,12 +176,14 @@ patientControllers.controller('PatientEditCtrl', ['$scope', '$routeParams', '$ht
         var index = $routeParams.ID;
         console.log(index);        
         
+        // Get the patient selected
         $http.get('/patientEdit/' + index).success(function (response) {
             console.log("I got the patient list");
             $scope.patient = response[0];
             console.log($scope.patient);
         });
         
+        // Get the doctor list
         $http.get('/doctorList').success(function (response) {
             console.log("I got the doctor list");
             $scope.doctorList = response;
@@ -174,12 +194,15 @@ patientControllers.controller('PatientEditCtrl', ['$scope', '$routeParams', '$ht
             var fName = $scope.patient.first_name,
                 lName = $scope.patient.last_name,
                 age = $scope.patient.age;
-
+            
+            
+            // Check validation
             if (fName != null && 
                 lName != null && 
                 age != null) {
                 $scope.patient.last_modified = Date().toString();
                 
+                // Update the record
                 $http.put('/patientEdit/' + index, $scope.patient).success(function (response) {
                     console.log("I update the patient");
                     console.log($scope.patient);
@@ -188,6 +211,7 @@ patientControllers.controller('PatientEditCtrl', ['$scope', '$routeParams', '$ht
                 });
             }
             else {
+                // Not Valid!
                 alert("Not Valid!");
             }
         }
@@ -196,6 +220,7 @@ patientControllers.controller('PatientEditCtrl', ['$scope', '$routeParams', '$ht
        
     }]);
 
+// Patient New Controller
 patientControllers.controller('PatientNewCtrl', ['$scope', '$routeParams', '$http', '$location',
     function ($scope, $routeParams, $http, $location) {
         console.log("Hello World from Patient New");
@@ -213,18 +238,13 @@ patientControllers.controller('PatientNewCtrl', ['$scope', '$routeParams', '$htt
         var patientWithID = [];            
         $scope.saveNew = function () {
             
-            //var patNew = {
-            //    "ID": $scope.patient.ID, "first_name": $scope.patient.first_name,
-            //    "last_name": $scope.patient.last_name, "age": $scope.patient.age,
-            //    "family_doctor_ID": $scope.patient.family_doctor_ID
-            //};
             var ID = $scope.patient.ID,
                 fName = $scope.patient.first_name,
                 lName = $scope.patient.last_name,
                 age = $scope.patient.age,
                 docID = $scope.patient.family_doctor_ID;
             
-            //if (patNew.ID != null && patNew.first_Name != null && patNew.last_Name != null && patNew.age != null && patNew.family_doctor_ID != null) {
+            // Check Validation
             if (ID != null && 
                 fName != null && 
                 lName != null && 
@@ -236,7 +256,7 @@ patientControllers.controller('PatientNewCtrl', ['$scope', '$routeParams', '$htt
                     console.log(patientWithID.length);
                     
                     
-                    if (patientWithID.length == 0) {
+                    if (patientWithID.length == 0) {    // Check if ID already exists
                         $scope.patient.created_at = Date().toString();
                         $scope.patient.last_modified = Date().toString();
                         
